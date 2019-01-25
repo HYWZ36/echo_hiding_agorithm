@@ -1,0 +1,28 @@
+[s1, fs] = audioread('hide_no_noise(man).wav');
+[s3, fs] = audioread('hide_filter(man).wav');
+n = length(s1);
+fft_y1=fftshift(fft(s1));
+fft_y3=fftshift(fft(s3));
+x=linspace(-4000,4000,n);
+y1 = abs(fft_y1)-abs(fft_y3);
+
+[s2, fs] = audioread('hide_no_noise(woman).wav');
+[s4, fs] = audioread('hide_filter(woman).wav');
+fft_y2=fftshift(fft(s2));
+fft_y4=fftshift(fft(s4));
+y2 = abs(fft_y2)-abs(fft_y4);
+subplot(221);
+plot(x,y1,'b-');
+xlabel('频率');
+ylabel('振幅');
+title('无攻击时音频的3000Hz-4000Hz频谱图');
+subplot(222);
+plot(x,y2,'r-');
+xlabel('频率');
+ylabel('振幅');
+title('低通滤波后音频的3000Hz-4000Hz频谱图');
+subplot(223);
+plot(x,y1,'b-',x,y2,'r-');
+xlabel('频率');
+ylabel('振幅');
+title('低通滤波前后音频部分频谱图比较');
